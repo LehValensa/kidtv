@@ -1,0 +1,19 @@
+[Unit]
+Description=Limit kid's Chrome playback (MPRIS) with web control page
+After=network.target
+
+[Service]
+# Only the first-run default: the account is changed later on the web page.
+Environment=KIDTV_USER=sofy
+# Web control page: http://<server>:8731/
+Environment=KIDTV_PORT=8731
+Environment=KIDTV_BIND=0.0.0.0
+ExecStart=/usr/bin/python3 /usr/local/bin/kidtv run
+Restart=always
+RestartSec=3
+# creates /var/lib/kidtv owned by root (the kid cannot edit state or settings)
+StateDirectory=kidtv
+StateDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target
