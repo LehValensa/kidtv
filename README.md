@@ -1,5 +1,7 @@
 # kidtv - Chrome TV time limiter for Ubuntu
 
+> **AI-generated project.** The code and this documentation were written by an AI assistant (Claude, by Anthropic) in a conversation with the project owner. The prompts that produced it are listed in the [Prompt log](#prompt-log). The service runs as root, so read the code before installing it on your own machine.
+
 Limits how long a child can watch video in Chrome (YouTube, YouTube Kids, anything that plays media) on an Ubuntu machine, without touching the network. The machine can keep working as a media server while the child's playback is paused when time is up.
 
 - **Daily allowance** (default 2 hours), counted only while video is actually playing.
@@ -199,3 +201,75 @@ This is designed for a small child, not a determined teenager.
 - It pauses; it cannot stop a child from pressing play again. Enable *Close Chrome if the kid keeps pressing play* if that happens.
 - Time is counted per day on this machine. Other devices are not counted.
 - Counting needs the service to be running. If the machine is off, nothing is counted.
+
+## Prompt log
+
+All prompts the project owner sent while building this project, in order, exactly as written (typos included). Assistant replies are not included.
+
+### Prompt 1
+
+```text
+I need to limit time when my kid watching TV in Google Chrome (youtube, youtubekids). Say 2 hours per day, easily prolongable by parents (me). What are ways to do it?
+```
+
+### Prompt 2
+
+```text
+Device is running Ubuntu. Network should not be disabled - it is media server and should work instantly.
+```
+
+### Prompt 3
+
+```text
+Could you check Chrome's API that can start/stop playing media? I think it will be enough to stop player (and keep it stopped until allowed by schedule) when limit is reached. Also, child is not allowed to watch TV during 2 periods:
+1) sleep time (21:00-7:00)
+2) nap time (13:00-15:00)
+```
+
+### Prompt 4
+
+```text
+Please write script using method 1
+```
+
+### Prompt 5
+
+```text
+Here are responces from playerctl, all commands working:
+sofy@mediaserver:~$ playerctl -l
+chromium.instance1841
+sofy@mediaserver:~$ playerctl -p chromium status
+Paused
+sofy@mediaserver:~$ playerctl -p chromium play
+sofy@mediaserver:~$ playerctl -p chromium pause
+```
+
+### Prompt 6
+
+```text
+Please add functionality to script:
+Configuration (quiet windows, kid's account) and commands for everyday use should be exposed via web interface on some particular free port, so I can control it via my mobile, without showing it to kid - this level of security is enough for my 4 years old kid.
+```
+
+### Prompt 7
+
+```text
+Exellent - service working. Now, could you add something:
+1) If possible, make notify-send messages disappearing after 10 seconds. Now these messages are persistent.
+2) Create final documentation in MD format (such as README.md)
+3) Create zip-file of this project, so I can download all files at once.
+4) Change default user from "kid" to "sofy"
+5) Set default for "Close Chrome if the kid keeps pressing play" to unchecked.
+```
+
+### Prompt 8
+
+```text
+Please create short description (up to 350 characters) of this project for github
+```
+
+### Prompt 9
+
+```text
+Mention in README that this project is AI-generated. Also add all my prompts to separate section in README, without your replies.
+```
